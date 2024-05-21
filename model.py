@@ -32,7 +32,6 @@ class PositionalEncoding(nn.Module):
         self.encoding = torch.zeros(max_len, d_model)
         position = torch.arange(0, max_len).unsqueeze(1)
         div_term = torch.exp(torch.arange(0, d_model, 2) * (-torch.log(torch.tensor(10000.0)) / d_model))
-        
         self.encoding[:, 0::2] = torch.sin(position * div_term)
 
         if d_model%2==0:
@@ -40,7 +39,6 @@ class PositionalEncoding(nn.Module):
         else:
             self.encoding[:, 1::2] = torch.cos(position * div_term)[:,:-1]
 
-        
         self.encoding = self.encoding.unsqueeze(0)  # Add batch dimension
         
     def forward(self, x):
