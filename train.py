@@ -65,7 +65,5 @@ def train_model(model, train_dataloader, val_dataloader, criterion, optimizer, s
     if return_best_loss:
         return record_pair
 
-    # Load the best model weights from disk
-    #model.load_state_dict(torch.load(save_path))
     return train_loss,val_loss
  
