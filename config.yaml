@@ -1,0 +1,17 @@
+hyperparameters:
+  lr: [0.001,0.002]
+  step_size: [10]
+  gamma: [0.1,0.2]
+  batch_size: [16]
+  d_model: [6]
+  num_encoder_layers: [1,2]
+  n_heads: [2]
+  dim_feedforward: [10]
+  dropout: [0.3]
+  num_epochs: [30]
+  patience: [10]
+
+eval_result_path: 'output/eval_result/best_model.pt'
+hparam_result_path: 'output/hparam_result/best_model.pt'
+trained_tokenizer_path: 'output/eval_result/trained_tokenizer.json'
+best_params_path: 'output/hparam_result/best_params.json'

@@ -1,0 +1,13 @@
+{
+    "lr": 0.002,
+    "step_size": 10,
+    "gamma": 0.1,
+    "batch_size": 16,
+    "d_model": 6,
+    "num_encoder_layers": 2,
+    "n_heads": 2,
+    "dim_feedforward": 10,
+    "dropout": 0.3,
+    "num_epochs": 30,
+    "patience": 10
+}
