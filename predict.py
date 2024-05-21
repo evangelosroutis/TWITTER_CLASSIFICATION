@@ -6,6 +6,7 @@ from model import TransformerClassifier
 from utilities.tokenizers import CharacterTokenizer
 from hparam_tuning_eval import filter_params
 import yaml
+from utilities.preprocessing import clean_data
 
 
 def load_hyperparameters(file_path):
@@ -78,7 +79,6 @@ def main(input_file, output_file, config_file,batch_size):
     # load trained tokenizer
     tokenizer=CharacterTokenizer()
     tokenizer.load(config_file['trained_tokenizer_path'])
-    #tokenizer.load('output/eval_result/trained_tokenizer.json')
     vocab_size=tokenizer.vocab_size
 
     # Load hyperparameters and initialize the model
@@ -91,9 +91,11 @@ def main(input_file, output_file, config_file,batch_size):
     # Read input data
     with open(input_file, 'r') as file:
         input_lines = file.read().splitlines()
+    
+    input_lines_cleaned=[clean_data(x) for x in input_lines]
 
     # Make predictions
-    predictions = predict(model, tokenizer, input_lines, batch_size) 
+    predictions = predict(model, tokenizer, input_lines_cleaned, batch_size) 
 
     # Write predictions to file
     write_predictions(predictions, output_file)
