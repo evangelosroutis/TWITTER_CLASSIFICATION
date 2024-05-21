@@ -67,7 +67,7 @@ def predict(model, tokenizer, input_lines, batch_size=16):
 
 
 
-def main(input_file, output_file, config_file):
+def main(input_file, output_file, config_file,batch_size):
     """
     Load the model, make predictions on input data in batches, and write predictions to an output file.
     """
@@ -93,7 +93,7 @@ def main(input_file, output_file, config_file):
         input_lines = file.read().splitlines()
 
     # Make predictions
-    predictions = predict(model, tokenizer, input_lines, batch_size=16) 
+    predictions = predict(model, tokenizer, input_lines, batch_size) 
 
     # Write predictions to file
     write_predictions(predictions, output_file)
@@ -103,7 +103,9 @@ if __name__ == '__main__':
     parser.add_argument('--input', type=str, required=True, help='Input file path with tweets')
     parser.add_argument('--output', type=str, required=True, help='Output file path for predictions')
     parser.add_argument('--config', type=str, default='config.yaml', help='Configuration file path for model settings')
+    parser.add_argument('--batch_size', type=int, default=32, help='Number of lines to process in each batch')
+
 
     args = parser.parse_args()
 
-    main(args.input, args.output, args.config)
+    main(args.input, args.output, args.config, args.batch_size)
