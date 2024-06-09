@@ -17,8 +17,6 @@ from sklearn.model_selection import train_test_split
 from utilities.save_load import read_labels_from_folder,read_list_from_folder
 
 
-
-
 def filter_params(func, params):
     """
     Filters parameters to match the signature of the provided function.
@@ -47,8 +45,6 @@ def save_best_params(best_params, file_path):
     with open(file_path, 'w') as f:
         json.dump(best_params, f, indent=4)
     print(f"Best parameters have been successfully saved to {file_path}")
-
-
 
 
 def main(config_file, output_path, mode):
@@ -96,10 +92,8 @@ def main(config_file, output_path, mode):
         train_model_params=filter_params(train_model,params)
 
         # Prepare DataLoaders
-
         train_dataloader = create_dataloader(X_train, y_train, tokenizer=tokenizer, **dataloader_params)
         val_dataloader = create_dataloader(X_val, y_val, tokenizer=tokenizer, shuffle=False, drop_last=False,  **dataloader_params)
-
 
         # Initialize model with current params
         model = TransformerClassifier(vocab_size=vocab_size, num_classes=num_classes,**model_params)
@@ -107,17 +101,14 @@ def main(config_file, output_path, mode):
         # Set up optimizer and scheduler with current lr, gamma, step_size
         optimizer = optim.Adam(model.parameters(),**optimizer_params)
         scheduler = StepLR(optimizer, **scheduler_params)
-
+        #set criterion
         criterion = nn.CrossEntropyLoss()
 
-
         if mode == "evaluation":
-
             train_loss,val_loss= train_model(model, train_dataloader, val_dataloader, criterion, optimizer, scheduler, save_path=config['eval_result_path'],return_best_loss=True,**train_model_params)
             print(f"Train_val Loss: {train_loss},Test Loss: {val_loss}")
             tokenizer.save(config['trained_tokenizer_path'])
             print('Tokenizer state saved')
-
         else:
             train_loss,val_loss = train_model(model, train_dataloader, val_dataloader, criterion, optimizer, scheduler, save_path=config['hparam_result_path'],**train_model_params)
             if val_loss < best_val_loss:
@@ -131,5 +122,4 @@ if __name__ == '__main__':
     parser.add_argument('--output', type=str, default='output/hparam_result/best_params.json', help='Path to save best parameters')
     parser.add_argument('--mode', type=str, default='tuning', choices=['tuning', 'evaluation'], help='Mode to run the script in')
     args = parser.parse_args()
-
     main(args.config, args.output, args.mode)
