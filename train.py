@@ -39,11 +39,9 @@ def train_model(model, train_dataloader, val_dataloader, criterion, optimizer, s
     best_loss = float('inf')
     epochs_no_improve = 0
     
-
     for epoch in range(num_epochs):
         train_loss = train_epoch(model, train_dataloader, criterion, optimizer)
         val_loss = evaluate(model, val_dataloader, criterion)
-        
         print(f'Epoch {epoch+1}/{num_epochs}, Train Loss: {train_loss:.4f}, Val Loss: {val_loss:.4f}')
 
         if val_loss < best_loss:

@@ -5,16 +5,13 @@ from torch.nn.utils.rnn import pad_sequence
 
 class TwitterDataset(Dataset):
     def __init__(self,sentences,labels,tokenizer):
- 
         self.sentences=sentences 
         self.labels=labels
         self.tokenizer=tokenizer
         
-
     def __len__(self):
         return len(self.sentences)
         
-
     def __getitem__(self,index):
         sentence=self.sentences[index]
         label=self.labels[index]
@@ -26,9 +23,7 @@ class TwitterDataset(Dataset):
         }
 
     
-
 def collate_fn(batch):
-
     input_ids = [item['input_ids'] for item in batch]
     labels = [item['label'] for item in batch]
     padded_input_ids = pad_sequence(input_ids, batch_first=True, padding_value=0)
@@ -39,7 +34,6 @@ def collate_fn(batch):
         'attention_masks': attention_masks,
         'labels': labels
     }
-
 
 
 def create_dataloader(sentences, labels, tokenizer, batch_size, shuffle=True, drop_last=True):

@@ -6,8 +6,6 @@ from pathlib import Path
 from functools import reduce
 
 
-
-
 class TwitterReader:
     def __init__(self, folder_path):
         self.folder_path = Path(folder_path)
@@ -40,11 +38,6 @@ class TwitterReader:
         if return_labels:
             return all_tweets, labels
         return all_tweets
-
-
-
-
-
 
 
 def stratified_train_eval_test_split(X, y, feature, eval_test_size=0.2, second_split=0.5, random_state=42):
@@ -85,11 +78,9 @@ def stratified_train_eval_test_split(X, y, feature, eval_test_size=0.2, second_s
 
     return X_train, X_eval, X_test, y_train, y_eval, y_test
 
-
 ################CLEANING FUNCTIONS#########################
  
 def remove_urls(text):
-    
     return re.sub(r'http\S+|www\S', '', text)
 
 def extract_emojis(text):
@@ -97,7 +88,6 @@ def extract_emojis(text):
 
 def find_mentions(text):
     mention_pattern = re.compile(r'@\w+')
-
     return mention_pattern.findall(text)
 
 def remove_mentions(text):
