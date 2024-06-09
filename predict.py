@@ -59,13 +59,10 @@ def predict(model, tokenizer, input_lines, batch_size=16):
                                                      batch_first=True, padding_value=tokenizer._token_to_id[tokenizer.pad_token])
             # Create a mask where padding tokens are True (masked) and all others are False (unmasked)
             src_key_padding_mask = (padded == tokenizer._token_to_id[tokenizer.pad_token])
-            
             output = model(padded, src_key_padding_mask)
             preds = torch.argmax(output, dim=1).tolist()  # Get predicted class indices for the whole batch
             predictions.extend(preds)
     return predictions
-
-
 
 
 def main(input_file, output_file, config_file,batch_size):
@@ -74,7 +71,6 @@ def main(input_file, output_file, config_file,batch_size):
     """
     with open(config_file, 'r') as file:
         config_file = yaml.safe_load(file)
-
 
     # load trained tokenizer
     tokenizer=CharacterTokenizer()
@@ -87,7 +83,6 @@ def main(input_file, output_file, config_file,batch_size):
     model = TransformerClassifier(vocab_size=vocab_size, num_classes=3,**model_params)
     model.load_state_dict(torch.load(config_file['eval_result_path']))
     
-
     # Read input data
     with open(input_file, 'r') as file:
         input_lines = file.read().splitlines()
@@ -106,8 +101,5 @@ if __name__ == '__main__':
     parser.add_argument('--output', type=str, required=True, help='Output file path for predictions')
     parser.add_argument('--config', type=str, default='config.yaml', help='Configuration file path for model settings')
     parser.add_argument('--batch_size', type=int, default=32, help='Number of lines to process in each batch')
-
-
     args = parser.parse_args()
-
     main(args.input, args.output, args.config, args.batch_size)
