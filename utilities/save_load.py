@@ -1,4 +1,3 @@
-# Function to save lists to folders
 from pathlib import Path
 import os
 import torch
