@@ -16,7 +16,6 @@ import inspect
 from sklearn.model_selection import train_test_split
 from utilities.save_load import read_labels_from_folder,read_list_from_folder
 
-
 def filter_params(func, params):
     """
     Filters parameters to match the signature of the provided function.
@@ -33,7 +32,6 @@ def filter_params(func, params):
     sig = inspect.signature(func)
     return {k: v for k, v in params.items() if k in sig.parameters}
  
-
 def save_best_params(best_params, file_path):
     """
     Saves the best hyperparameters to a JSON file and prints a confirmation message.
@@ -45,7 +43,6 @@ def save_best_params(best_params, file_path):
     with open(file_path, 'w') as f:
         json.dump(best_params, f, indent=4)
     print(f"Best parameters have been successfully saved to {file_path}")
-
 
 def main(config_file, output_path, mode):
     with open(config_file, 'r') as file:
@@ -115,7 +112,7 @@ def main(config_file, output_path, mode):
                 best_val_loss = val_loss
                 best_params = params
                 save_best_params(params, output_path)
-
+                
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Hyperparameter Tuning and Evaluation Script')
     parser.add_argument('--config', type=str, default='config.yaml', help='Path to configuration YAML file')
