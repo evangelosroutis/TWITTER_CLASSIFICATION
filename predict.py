@@ -8,7 +8,6 @@ from hparam_tuning_eval import filter_params
 import yaml
 from utilities.preprocessing import clean_data
 
-
 def load_hyperparameters(file_path):
     """
     Load hyperparameters from a JSON file.
@@ -20,7 +19,6 @@ def load_hyperparameters(file_path):
     with open(file_path, 'r') as file:
         hyperparameters = json.load(file)
     return hyperparameters
-
 
 def write_predictions(predictions, output_file):
     """
@@ -35,7 +33,6 @@ def write_predictions(predictions, output_file):
     with open(output_file, 'w') as file:
         for pred in predictions:
             file.write(f"{label_map[pred]}\n")
-
 
 def predict(model, tokenizer, input_lines, batch_size=16):
     """
@@ -63,7 +60,6 @@ def predict(model, tokenizer, input_lines, batch_size=16):
             preds = torch.argmax(output, dim=1).tolist()  # Get predicted class indices for the whole batch
             predictions.extend(preds)
     return predictions
-
 
 def main(input_file, output_file, config_file,batch_size):
     """
